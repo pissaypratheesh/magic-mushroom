@@ -1,5 +1,4 @@
 import React from 'react';
-import NewsPage from '../components/NewsPage'
 import SideMenu from '../components/SideMenu'
 import PropTypes from "prop-types";
 import DataWrapper from "../components/common/DataWrapper";

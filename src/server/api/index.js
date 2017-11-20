@@ -5,6 +5,7 @@
 var express = require('express');
 var router = express.Router()
 var urlMap = require('../../config/urls.js');
+
 var _ = require('underscore');
 var path = require('path');
 var ipLocator = require('ip-locator')
@@ -15,6 +16,8 @@ import {makeRequest} from "../../lib/makeRequest"
 import { cacheAPIHeader, isProduction } from '../../config/constants'
 import {StoSTimeout} from '../../config/constants'
 import jsonFormatter from '../jsonFormatter';
+import statesMapping from '../../config/statesMapping'
+
 let header = {
   headers:defHeader.header
 };
@@ -46,7 +49,16 @@ var options = {
   }
 };
 
+router.get('/apis/cities/:state',function (req, res) {
 
+  var urlObj = {urlList:[{url:urlMap.cities + (statesMapping[req.params.state] || 1),timeout:timeout.timeout, headers:header.headers, method:'get'}]}
+  return makeRequest(urlObj,(err, resp)=> {
+    if (err) {
+      return res.status(500).send({error: "server error"});
+    }
+    return res.status(200).json(resp[0]['data']);
+  });
+})
 
 
 //Below to be deleted
