@@ -45,6 +45,7 @@
     "idb": "^2.0.4",
     "instagram-id-to-url-segment": "0.0.0",
     "ip-location": "~1.0.1",
+    "ip-locator": "0.0.1",
     "js-cookie": "^2.1.4",
     "lazy-route": "^1.0.7",
     "lodash": "^4.17.4",

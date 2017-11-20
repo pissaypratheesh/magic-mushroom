@@ -5,7 +5,6 @@ import DataWrapper from "../components/common/DataWrapper";
 import { inject, observer } from "mobx-react";
 import personalization from '../lib/personalization';
 var address = require('address');
-const getIp = require('get-ip');
 var _ = require('underscore');
 _.mixin(require('../lib/mixins'));
 
@@ -150,7 +149,6 @@ class HomePage extends React.Component {
     return (
       <div className={`lang_${context.store.selectedLang}`}>
         <SideMenu {...this.props}/>
-        <NewsPage {...this.props}/>
         {(this.store.activeNav!=="all-categories") &&
           context.store.isOnline &&
           (<div className="ref_btn"

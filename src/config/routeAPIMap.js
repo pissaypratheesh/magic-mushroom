@@ -2,8 +2,6 @@
  * Created by pratheesh on 8/6/17.
  */
 
-import langMapping from '../config/langMapping'; //like "en":"english",
-import ReverseLangMapping from '../config/ReverseLangMapping'; //like "english":"en"
 import URLParamsExtractor from '../lib/URLParamsExtractor';
 
 //Why this file: List of parallel calls to be made before rendering a route url
@@ -11,9 +9,9 @@ export default function(params) {
 
   let topicsOrDetails;
   let topicsRelated = {
-    urlList: URLParamsExtractor.topics(params).url,
-    updateFunction: URLParamsExtractor.topics(params).updateFunction,
-    waterfall: URLParamsExtractor.topics(params).waterfall
+    urlList: "",
+    updateFunction: '',
+    waterfall: ''
   };
   if(params.topicType){
     topicsOrDetails = (params.topicType.indexOf("-newsid-") !== -1) ? "details" : "topics";

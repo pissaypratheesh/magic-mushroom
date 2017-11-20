@@ -2,8 +2,6 @@
  * Created by tishya on 27/7/17.
  */
 import React from 'react';
-import langMapping from '../config/langMapping';
-import { translateNotFound, translateNotFoundAnother } from '../config/localizationMapping'
 import { inject, observer } from "mobx-react";
 import {  Link } from 'react-router-dom'
 
@@ -21,14 +19,14 @@ class NotFound extends React.Component {
 
   render() {
     let context = this;
-    let notFoundText = translateNotFound[context.store.selectedLang] || "It looks like you are lost";
-    let notFoundAnotherText = translateNotFoundAnother[context.store.selectedLang] || "The page you are looking no longer exists";
+    let notFoundText =  "It looks like you are lost";
+    let notFoundAnotherText = "The page you are looking no longer exists";
     return (
-      <div className={`lang_${context.store.selectedLang}`}>
+      <div className={`lang_${context.store.selectedLang || 'en'}`}>
         <header className="defult">
           <div className="lhs">
             <div className="action">
-              <Link className="btn_bk" to={`/news/${context.store.selectedCountry}/${langMapping[context.store.selectedLang]}`}>
+              <Link className="btn_bk" to={`/news/${context.store.selectedCountry || 'en'}/${langMapping[context.store.selectedLang || 'en']}`}>
               </Link>
             </div>
           </div>

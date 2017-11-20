@@ -6,15 +6,9 @@ import routeUrlMap from '../config/routeAPIMap'
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
 axiosRetry(axios, { retries: callRetries });
-import langMapping from '../config/langMapping'; //like "en":"english",
-import supportedLanguagues from '../config/supportedLanguagues';
-import ReverseLangMapping from '../config/ReverseLangMapping'; //like "english":"en"
-import waterfallFlow from '../lib/waterfallFlow';
 import {makeRequest} from '../lib/makeRequest'
 import personalization from '../lib/personalization';
 import UIEffects from '../lib/UIEffects';
-import { isPassiveSupported } from '../lib/IsPassiveSupported'
-var comScore = require('../lib/comscore');
 var _ = require('underscore');
 var deviceInfo  = require('../lib/deviceDetect');
 var cookies = require('js-cookie');

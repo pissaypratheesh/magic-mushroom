@@ -26,10 +26,6 @@ app.use(countResponseSize());
 app.use(require('../lib/accessLog')({'accessLog': accessLog}));
 // Middle ware to add req.clientIP from TRUE_CLIENT_IP/XFF/ClientIP
 app.use(require('../lib/clientIP.js'));
-app.use(require('../lib/middlewares/instrument')({
-  app: 'pwa',
-  prefix: ".web."
-}));
 
 app.use("/pwa",function (req, res, next) {
   var file = path.join(app.rootDir,'pwa.html');
