@@ -42,7 +42,7 @@ export default class AppState {
     _.extend(params,context);
     // Fetch in an array all the calls that need to be fired with its params and method
     let dataToFetch = _.at(params,'dataToFetch') || routeUrlMap(params)[pattern];
-
+    console.log(" datatofetch-->",dataToFetch)
     if(!dataToFetch || _.isEmpty(dataToFetch.urlList) || ignoreInit){
       return context[dataToFetch.updateFunction](null, url, params)
     }
@@ -57,7 +57,7 @@ export default class AppState {
     })
   }
 
-    @action clearData(name){
+  @action clearData(name){
     let context = this;
     _.isArray(name) ? (_.map(name,(eachName)=>{context[eachName] = undefined})) : (this[name] = undefined);
   }
@@ -65,6 +65,12 @@ export default class AppState {
   @action updateData(objArr){
     let context = this;
     _.isObject(objArr) && _.each(objArr,(val,key)=>{context[key] = val});
+  }
+
+  @action updateHome(resp, url, params){
+    let context = this;
+    this.states = resp[0]
+    console.log(" statesss-->",resp[0])
   }
 
   @action changeOnlineStatus(bool){

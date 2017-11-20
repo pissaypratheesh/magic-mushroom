@@ -18,21 +18,9 @@ export default function(params) {
   }
   return {
 
-    "/news/:country/:language/country-language-menu" : {
-      urlList: URLParamsExtractor.languages(params).url,
-      updateFunction: URLParamsExtractor.languages(params).updateFunction,
-    },
-
-    "/news/:country/:language/navigation-menu" : topicsRelated,
-
-    "/news/:country/:language/:type" : topicsRelated,
-
-    "/news/:country/:language" : topicsRelated,
-
-    "/news/:country/:language/:type/:topicType" : {
-      urlList: URLParamsExtractor[topicsOrDetails] && URLParamsExtractor[topicsOrDetails](params).url,
-      updateFunction: URLParamsExtractor[topicsOrDetails] && URLParamsExtractor[topicsOrDetails](params).updateFunction,
-      waterfall:  URLParamsExtractor[topicsOrDetails] && URLParamsExtractor[topicsOrDetails](params).waterfall
+    "/home":{
+      urlList: URLParamsExtractor.home(params).url,
+      updateFunction:URLParamsExtractor.home(params).updateFunction
     },
   }
 }

@@ -54,9 +54,11 @@ router.get('/apis/cities/:state',function (req, res) {
   var urlObj = {urlList:[{url:urlMap.cities + (statesMapping[req.params.state] || 1),timeout:timeout.timeout, headers:header.headers, method:'get'}]}
   return makeRequest(urlObj,(err, resp)=> {
     if (err) {
-      return res.status(500).send({error: "server error"});
+      //return res.status(500).send({error: "server error"});
     }
-    return res.status(200).json(resp[0]['data']);
+    return res.status(200).json([
+      {name:'blr'},{name:'hyd'},{name:'mys'}
+      ]);
   });
 })
 

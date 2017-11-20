@@ -13,6 +13,15 @@ const URLParamsExtractor =  {
       updateFunction
     }
   },
+
+  home(params){
+    let url = [{url: "/apis/cities/orissa", method: "get", params}],
+      updateFunction = "updateHome";
+    return {
+      url,
+      updateFunction
+    }
+  },
 }
 
 

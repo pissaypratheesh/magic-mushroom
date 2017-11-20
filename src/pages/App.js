@@ -14,11 +14,6 @@ export default class App extends Component {
     this.store = this.props.store;
   }
   componentDidMount() {
-    this.authenticate();
-  }
-  authenticate(e) {
-    if (e) e.preventDefault();
-    this.store.appState.authenticate();
   }
 
   render() {
