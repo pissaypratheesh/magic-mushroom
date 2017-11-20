@@ -1,5 +1,4 @@
 # Postman API collection for server to backEnd calls:
-# https://www.getpostman.com/collections/39f81b9a791434c559b6
 
 #Starter Kit for [Building PWA Application]
 
