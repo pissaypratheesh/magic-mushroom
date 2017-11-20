@@ -1,0 +1,38 @@
+/***** page slide - body content ******/
+.dataWarp{position:absolute;top:96px;display:none;left:0;width:100%;height:100%}
+.dataWarp.active{position:static;display:block;height:auto}
+
+/***** details - body content *****/
+.detailsWarp h1{font-size:20px;color:#000000;padding:20px 10px;background:#fff}
+.detailsWarp .hdImg{display:block}
+.detailsWarp .hdImg source, .detailsWarp .hdImg img{width:100%;max-width:100%;height:auto;display:block}
+.detailsWarp article{padding:0 10px 10px 10px;background:#fff}
+.detailsWarp article .srcShare{border-bottom:1px solid #eee}
+.detailsWarp article .srcShare .src{float:left;margin-top:12px}
+.detailsWarp article .srcShare .src .logo,.detailsWarp article .srcShare .src .info{float:left}
+.detailsWarp article .srcShare .src .logo{margin-right:5px}
+.detailsWarp article .srcShare .src .logo source, .detailsWarp article .srcShare .src .logo img{max-width:25px;width:25px;max-height:25px;height:25px}
+.detailsWarp article .srcShare .src .info span,.detailsWarp article .srcShare .src .info em{display:block}
+.detailsWarp article .srcShare .src .info span{font-size:11px;color:rgba(51,51,51,.7);text-transform:capitalize;padding-bottom:3px}
+.detailsWarp article .srcShare .src .info em{color:rgba(0,0,0,.5);font-size:8px}
+.detailsWarp article .srcShare .share{float:right}
+.detailsWarp article .srcShare .share ul li{float:left}
+.detailsWarp article .srcShare .share ul li a{display:block}
+.detailsWarp article .dt{font-size:10px;color:#999999;padding:15px 0}
+.detailsWarp article .data *{line-height:1.7em;color:#333}
+.detailsWarp article .data p{margin:0 0 15px 0;}
+
+/***** native share btn (details) *****/
+.btnNativeShare{position:fixed;z-index:9;bottom:20px;right:20px;background-color:#BF3D31;border-radius:99%;box-shadow:0 2px 6px 0 rgba(0,0,0,0.30)}
+
+/***** landling logo header (np landing) *****/
+.np_landing .hd_img{text-align:center;background:#fff;padding:50px 0;}
+.np_landing .hd_img img{max-width:200px;height:auto;display:inline-block;}
+.np_landing .np_nav ul{overflow-x:auto;white-space:nowrap}
+.np_landing .np_nav ul li{display:inline-block}
+.np_landing .np_nav ul li a{display:inline-block;padding:15px;text-transform:capitalize;color:#2e2e2e;}
+.fixed_hd.np_nav{background:#f1f1f1;left:0;position:fixed;top:48px;width:100%;z-index: 2}
+
+/***** swap view height issue ****
+.react-swipeable-view-container{position:absolute;height:100%;width:100%}
+*/

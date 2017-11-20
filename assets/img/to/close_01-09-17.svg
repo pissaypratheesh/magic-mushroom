@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="8px" height="8px" viewBox="0 0 8 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>Shape</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="V2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.799999952">
+        <g id="Story-Details-banner-compact" transform="translate(-16.000000, -26.000000)" fill="#FFFFFF">
+            <g id="Banner">
+                <g id="delete/remove" transform="translate(10.000000, 20.000000)">
+                    <g id="Group">
+                        <path d="M13.27365,6.72645 C13.0175,6.4703 12.60255,6.4703 12.3464,6.72645 L10,9.0727 L7.6536,6.72645 C7.39745,6.4703 6.9824,6.4703 6.72625,6.72645 C6.4701,6.98245 6.4701,7.39775 6.72625,7.65375 L9.07235,10 L6.72595,12.3463 C6.4698,12.60225 6.4698,13.0174 6.72595,13.27365 C6.854,13.40175 7.02185,13.46575 7.1896,13.46575 C7.35735,13.46575 7.52515,13.40175 7.65315,13.27365 L10,10.92715 L12.3464,13.27375 C12.4745,13.40185 12.6422,13.46585 12.80995,13.46585 C12.97765,13.46585 13.1455,13.4019 13.27355,13.27375 C13.5297,13.0178 13.5297,12.60245 13.27355,12.3465 L10.92725,10 L13.27365,7.65375 C13.5298,7.39775 13.5298,6.9826 13.27365,6.72645 L13.27365,6.72645 Z" id="Shape"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

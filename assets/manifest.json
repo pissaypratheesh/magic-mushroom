@@ -1,0 +1,33 @@
+{
+  "name": "Magic Mushroom Lite",
+  "short_name": "Magic Mushroom",
+  "start_url": "/?mode=pwa&utm_source=homescreen&utm_medium=a2hs",
+  "display": "standalone",
+  "gcm_sender_id": "28487820162",
+  "theme_color": "#f2f2f2",
+  "background_color": "#f2f2f2",
+  "description": "Get doctors on the go",
+
+  "icons": [
+    {
+      "src": "/assets/img/icon-192x192.png?mode=pwa",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/img/icon-256x256.png?mode=pwa",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/img/icon-384x384.png?mode=pwa",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/img/icon-512x512.png?mode=pwa",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

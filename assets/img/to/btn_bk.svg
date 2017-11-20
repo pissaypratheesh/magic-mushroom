@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="10px" height="16px" viewBox="0 0 10 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 44 (41411) - http://www.bohemiancoding.com/sketch -->
+    <title>Back Arrow</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="News-Details" transform="translate(-12.000000, -60.000000)" fill="#979797">
+            <g id="Title-bar" transform="translate(0.000000, 50.000000)">
+                <path d="M12.0055469,18 L12,18.0055469 L19.9944531,26 L21.5933437,24.4011094 L15.1922344,18 L21.5933437,11.5988906 L19.9944531,10 L12,17.9944531 L12.0055469,18 Z" id="Back-Arrow"></path>
+            </g>
+        </g>
+    </g>
+</svg>

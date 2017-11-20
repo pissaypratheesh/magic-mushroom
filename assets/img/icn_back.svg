@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="9px" height="15px" viewBox="0 0 9 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43 (38999) - http://www.bohemiancoding.com/sketch -->
+    <title>icn_back</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M8.17933333,14.6657778 C7.802,15.0434444 7.18933333,15.0433333 6.81144444,14.6657778 C6.80922222,14.6635556 0.396111111,8.25477778 0.396111111,8.25477778 C0.219888889,8.07688889 0.109,7.83288889 0.109,7.56255556 C0.108777778,7.25922222 0.248777778,6.98855556 0.467777778,6.81122222 L6.86777778,0.398111111 C7.25422222,0.0165555556 7.86666667,0.0165555556 8.24444444,0.394333333 C8.622,0.771666667 8.622,1.38411111 8.24444444,1.76222222 C8.24211111,1.76444444 2.44922222,7.56255556 2.44922222,7.56255556 L8.17588889,13.2892222 C8.55688889,13.6752222 8.55711111,14.2881111 8.17933333,14.6657778 Z" id="path-1"></path>
+    </defs>
+    <g id="web+wap+pwa" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-5">
+            <g id="icn_back">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="Clip-2" fill="#282828" xlink:href="#path-1"></use>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="36px" height="36px" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43 (38999) - http://www.bohemiancoding.com/sketch -->
+    <title>004-facebook</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="share_sprite" transform="translate(0.000000, -198.000000)" fill-rule="nonzero">
+            <g id="004-facebook" transform="translate(0.000000, 198.000000)">
+                <circle id="Oval" fill="#3B5998" cx="17.6607246" cy="17.6607246" r="17.6607246"></circle>
+                <path d="M22.100619,18.3520674 L18.9492793,18.3520674 L18.9492793,29.8971152 L14.1747321,29.8971152 L14.1747321,18.3520674 L11.9039416,18.3520674 L11.9039416,14.2946782 L14.1747321,14.2946782 L14.1747321,11.6690865 C14.1747321,9.79150514 15.0666148,6.85140912 18.9917799,6.85140912 L22.5284582,6.86620562 L22.5284582,10.8045932 L19.9623673,10.8045932 C19.5414541,10.8045932 18.9495942,11.0148923 18.9495942,11.9105528 L18.9495942,14.2984561 L22.5177544,14.2984561 L22.100619,18.3520674 Z" id="Shape" fill="#FFFFFF"></path>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,79 @@
+/***** loading *****/
+.dot-loader p{font-size:11px;color:#232323;text-align:center;padding-bottom:30px}
+.dot-loader-inner{text-align:center;padding:30px 10px 10px 10px}
+.dot-loader-inner label{font-size:20px;opacity:0;display:inline-block}
+@keyframes dot{
+  0%{
+    opacity:0;
+    transform:translateX(-300px);
+  }
+  33%{
+    opacity:1;
+    transform:translateX(0px);
+  }
+  66%{
+    opacity:1;
+    transform:translateX(0px);
+  }
+  100%{
+    opacity:0;
+    transform:translateX(300px);
+  }
+}
+@-webkit-keyframes dot{
+  0%{
+    opacity:0;
+    -webkit-transform:translateX(-300px);
+  }
+  33%{
+    opacity:1;
+    -webkit-transform:translateX(0px);
+  }
+  66% {
+    opacity:1;
+    -webkit-transform:translateX(0px);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform:translateX(300px);
+  }
+}
+.dot-loader-inner label:nth-child(4){
+  color:#D95423;
+  -webkit-animation:dot 3s 200ms infinite ease-in-out;
+  animation:dot 3s 200ms infinite ease-in-out;
+}
+.dot-loader-inner label:nth-child(3){
+  color:#87D447;
+  -webkit-animation:dot 3s 300ms infinite ease-in-out;
+  animation:dot 3s 300ms infinite ease-in-out;
+}
+
+.dot-loader-inner label:nth-child(2) {
+  color:#50AFCD;
+  -webkit-animation:dot 3s 400ms infinite ease-in-out;
+  animation:dot 3s 400ms infinite ease-in-out;
+}
+
+.dot-loader-inner label:nth-child(1) {
+  color:#EFAA02;
+  -webkit-animation:dot 3s 500ms infinite ease-in-out;
+  animation:dot 3s 500ms infinite ease-in-out;
+}
+
+/***** font size popup *****/
+.popup .inr .size .line .pipe span.active{
+  animation: rp .5s ease-out;
+}
+@keyframes rp {
+  to {
+    transform: scale(2);
+    opacity:0;
+  }
+}
+
+/***** dh splish screen *****/
+.dh_splash{position:fixed;z-index:99999;top:0;left:0;width:100%;height:100%;background:rgba(255,255,255,.9);display:none}
+.dh_splash .dh_logo{width:200px;height:110px;background:url("../img/dailyHunt_logo_splash.svg") center center no-repeat;background-size:80px auto;position:absolute;z-index:999999;top:30%;left:50%;margin-left:-100px;margin-top:-25px}
+.dh_splash .dh_logo span{display:block;padding-top:90px;text-align:center;font-size:11px;color:#808080}
+.dh_splash .dot-loader{position:absolute;z-index:9999999;width:100%;bottom:0;left:0}

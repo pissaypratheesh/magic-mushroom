@@ -1,0 +1,93 @@
+/***** header slide down *****/
+.hdSclDn{
+  -webkit-animation-name:hdSclDn; /* Safari 4.0 - 8.0 */
+  -webkit-animation-duration:.5s; /* Safari 4.0 - 8.0 */
+  animation-name:hdSclDn;
+  animation-duration:.5s;
+  -webkit-animation-fill-mode:forwards; /* Safari 4.0 - 8.0 */
+  animation-fill-mode:forwards;
+}
+@-webkit-keyframes hdSclDn {
+    from{top:-55px}
+    to{top:0}
+}
+@keyframes hdSclDn {
+    from{top:-55px}
+    to{top:0}
+}
+/***** header slide up *****/
+.hdSclUp{
+  -webkit-animation-name:hdSclUp; /* Safari 4.0 - 8.0 */
+  -webkit-animation-duration:.5s; /* Safari 4.0 - 8.0 */
+  animation-name:hdSclUp;
+  animation-duration:.5s;
+  -webkit-animation-fill-mode:forwards; /* Safari 4.0 - 8.0 */
+  animation-fill-mode:forwards;
+}
+@-webkit-keyframes hdSclUp {
+  from{top:0}
+  to{top:-55px}
+}
+@keyframes hdSclUp {
+  from{top:0}
+  to{top:-55px}
+}
+/****** andorid ripple effect *****/
+.ripWap{position:relative;overflow:hidden}
+.rip{width:100%;height:100%;position:absolute;top:0;left:0}
+.ripple {
+  position: absolute;
+  background: rgba(0,0,0,.15);
+  border-radius: 100%;
+  transform: scale(0);
+  pointer-events: none;
+}
+.ripple.show {
+  animation: ripple .75s ease-out;
+}
+@keyframes ripple {
+  to {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+/***** page landing animation *****/
+.dh-list-item, .detailsWarp, .edition{ animation: scrollup .7s; -moz-animation: scrollup .7s; -webkit-animation: scrollup .7s; -o-animation: scrollup .7s }
+@-webkit-keyframes scrollup{
+  0%{margin-top:25px; opacity:0}
+  100%{margin-top:0; opacity:1}
+}
+@-moz-keyframes scrollup{
+  0%{margin-top:25px; opacity:0}
+  100%{margin-top:0; opacity:1}
+}
+@-ms-keyframes scrollup{
+  0%{margin-top:25px;opacity:0}
+  100%{margin-top:0;opacity:1}
+}
+@-o-keyframes scrollup{
+  0%{margin-top:25px;opacity:0}
+  100%{margin-top:0;opacity:1}
+}
+@keyframes scrollup{
+  0%{margin-top:25px;opacity:0;}
+  100%{margin-top:0;opacity:1;}
+}
+/***** prev / next page animation *****/
+.swap_lft{-webkit-animation:swap_lft .4s; -moz-animation:swap_lft .4s; -ms-animation:swap_lft .4s; -o-animation:swap_lft .4s; animation:swap_lft .4s; -webkit-animation-fill-mode:forwards; animation-fill-mode:forwards}
+@-webkit-keyframes swap_lft{
+  100%{
+    -webkit-transform:translateX(-100%);
+    transform:translateX(-100%);
+    opacity:0
+  }
+}
+
+.swap_rht{-webkit-animation:swap_rht .4s; -moz-animation:swap_rht .4s; -ms-animation:swap_rht .4s; -o-animation:swap_rht .4s; animation:swap_rht .4s; -webkit-animation-fill-mode:forwards; animation-fill-mode:forwards}
+@-webkit-keyframes swap_rht{
+  100%{
+    -webkit-transform:translateX(100%);
+    transform:translateX(100%);
+    opacity:0
+  }
+}

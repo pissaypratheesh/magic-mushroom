@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="19px" viewBox="0 0 20 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43 (38999) - http://www.bohemiancoding.com/sketch -->
+    <title>Shape Copy</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="app" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-27" transform="translate(-2662.000000, -410.000000)" stroke-width="2" stroke="#FFFFFF" fill-rule="nonzero">
+            <g id="photogallery" transform="translate(2374.000000, 371.000000)">
+                <g id="details-2">
+                    <path d="M298,56.515 L296.695,55.3315 C292.06,51.124 289,48.3475 289,44.95 C289,42.1735 291.1735,40 293.95,40 C295.516,40 297.019,40.729 298,41.8765 C298.981,40.729 300.484,40 302.05,40 C304.8265,40 307,42.1735 307,44.95 C307,48.3475 303.94,51.124 299.305,55.3315 L298,56.515 Z" id="Shape-Copy"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

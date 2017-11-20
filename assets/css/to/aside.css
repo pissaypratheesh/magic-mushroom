@@ -1,0 +1,12 @@
+.sideWap .sidenav{width:100%;position:fixed;height:100%;left:0;top:0;z-index:999999;background:transparent;overflow:hidden;display:none;}
+.sideWap aside{width:80%;position:fixed;height:100%;left:-100%;top:0;z-index:9999999;background:#fff;overflow-y:auto;box-shadow:0 0 2px 1px #adadad}
+.sideWap aside .login{background:rgba(214,214,214,.6);padding:20px 10px}
+.sideWap aside .login .dh_logo2{background:url("../img/dailyHunt_logo_splash.svg") center top no-repeat;background-size:100% auto;width:100px;height:75px;margin:0 auto 20px auto}
+.sideWap aside .login .btn{text-align:center}
+.sideWap aside .login .btn a.btn_sign{margin:0 auto;padding:10px 0;width:100px;text-align:center;border:1px solid #3C3C3C;color:#3C3C3C;display:inline-block;border-radius:3px}
+.sideWap aside .subnav{padding:0 10px}
+.sideWap aside .subnav ul li a{display:block}
+.sideWap aside .subnav ul li{border-bottom:1px solid #dedede;padding:15px 50px 15px 15px;background:url("../img/arrow-rht.svg") no-repeat;background-position:right 10px center;background-size:7px auto}
+.sideWap aside .subnav ul li p{color:#4d4d4d}
+.sideWap aside .subnav ul li span{color:#9b9b9b;font-size:10px}
+.sideWap aside .btn_bk{display:inline-block}
