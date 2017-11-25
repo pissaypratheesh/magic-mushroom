@@ -1,7 +1,7 @@
 import express from 'express';
 import webpack from 'webpack';
 import path from 'path';
-import { isProduction, assetsExpiry, bundleExpiry} from '../config/constants'
+import { isProduction, assetsExpiry, bundleExpiry, enableTestLogs} from '../config/constants'
 import configDev from '../webpack.config.dev';
 import configProd from '../webpack.config.prod';
 
@@ -9,7 +9,6 @@ const port = 1443;
 const app = express();
 const compiler = isProduction ? webpack(configProd) : webpack(configDev);
 const api = require('../server/api/index');
-var ipLocator = require('ip-locator')
 var fs = require("fs");
 var bodyParser = require('body-parser');
 var compression = require('compression');
@@ -26,7 +25,6 @@ app.use(countResponseSize());
 app.use(require('../lib/accessLog')({'accessLog': accessLog}));
 // Middle ware to add req.clientIP from TRUE_CLIENT_IP/XFF/ClientIP
 app.use(require('../lib/clientIP.js'));
-
 app.use("/pwa",function (req, res, next) {
   var file = path.join(app.rootDir,'pwa.html');
   fs.exists(file, function(exists) {
@@ -56,12 +54,16 @@ app.use(function(req, res, next) {
   req.connection.remoteAddress ||
   req.socket.remoteAddress ||
   req.connection.socket.remoteAddress).split(",")[0];
+  res.setHeader('ip',ip);
+  enableTestLogs && res.setHeader('enablelogs',true);
+  next();
+/*
   ipLocator.getDomainOrIPDetails(ip,'json', function (err, data) {
     //console.log(" data err-->",err,data,typeof data)
-    res.setHeader('ip',ip);
     !err && _.isObject(data) && res.setHeader('clientData',JSON.stringify(data));
     next();
   });
+*/
 });
 app.use(compression());
 app.use(require('webpack-dev-middleware')(compiler, {

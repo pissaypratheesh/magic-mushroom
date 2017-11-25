@@ -34,6 +34,24 @@ function fetchAndCache(url) {
       });
 }
 
+
+function fetchOnly(url) {
+    return fetch(url)
+      .then(function(response) {
+        // Check if we received a valid response
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        return response;
+      })
+      .catch(function(error) {
+        //console.log('Request failed:', error);
+        // You could return a custom offline 404 page here
+      });
+}
+
+
+
 if(self) {
   self.addEventListener('install', function (event) {
     self.skipWaiting();
@@ -64,6 +82,9 @@ if(self) {
     if(event) {
       var re1 = new RegExp("^https?://" + location.host,"g");
       var re2 = new RegExp("^https?://" + "[A-Za-z0-9.]*\.newshunt\.com","g");
+      if(event.request && event.request.method !== "GET"){
+        return event.respondWith(fetchOnly(event.request));
+      }
 
       if(event.request.url.match(re1) || event.request.url.match(re2)){
         return event.respondWith(

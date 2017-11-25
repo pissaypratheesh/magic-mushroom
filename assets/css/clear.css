@@ -1,1 +1,2 @@
-.ctrl li:after,.serp_list li a:after,.serp_list li a .RHS .action:after,.details-data article .profile .info:after,.details-data article .photo_addrs:after,.details-data article .reviews .hd:after,.details-data article .reviews .review_lst .info:after,.details-data article .address .actionWrp:after{content:" ";display:block;clear:both;line-height:0;height:0}
+/***** clear ele *****/
+header .siteNav .LHS:after,header nav:after,.detailsWarp article .srcShare:after,header.dtls .details_hd:after,.popup .inr .size .txt:after{content:" ";display:block;clear:both;line-height:0;height:0}

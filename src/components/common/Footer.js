@@ -2,7 +2,6 @@
  * Created by tishya on 1/8/17.
  */
 import React from 'react';
-import langMapping from '../../config/langMapping';
 import { inject, observer } from "mobx-react";
 import {  Link } from 'react-router-dom'
 

@@ -4,11 +4,25 @@
 
 import { pageSize, isQa } from "./constants";
 
-let baseUrl = isQa ? 'http://13.126.245.12' : 'http://13.126.245.12';
+let baseUrl = isQa ? 'http://qa-news.newshunt.com' : 'http://dh-ws.news.dailyhunt.in';
 
 var urlMap = {
-  cities: baseUrl + "/city/stateId/",
-  localities: baseUrl + "/locality/cityId/",
+  allTopics:baseUrl + "/api/v1/pages/users/",
+  allTopicsCompleteUrl: baseUrl + "/api/v1/pages/users/dhpwa123?langCode=",
+  npCategoryTopics: baseUrl + "/api/v1/categories/source/",
+  news: baseUrl + "/api/v1/headlines/user/WEB-1234?edition=india&pageSize=" + pageSize +"&langCode=",
+  headlines: baseUrl + "/api/v1/headlines/user/",
+  topics: baseUrl + "/api/v1/topics/navigations?edition=india&langCode=",
+  generalizedTopics: baseUrl + "/api/v1/topics/",
+  details: baseUrl + "/api/v1/news/article/",
+  lang: baseUrl + "/api/v1/languages?editionKey=india",
+  group: baseUrl + "/api/v1/groups/edition/india",
+  npByCategory: baseUrl + "/api/v1/newspapers?editionKey=",
+  instrument:'http://analytics-stage.dailyhunt.in/topics/analytics-events-stage',
+  register: 'http://stage-api-news.dailyhunt.in/api/v1/registerdevice',//baseUrl + '/api/v1/register/pwa',
+  handshake: 'http://stage-api-news.dailyhunt.in/api/v1/handshake',//baseUrl + '/api/v1/register/pwa',
 }
 
 module.exports = urlMap;
+
+

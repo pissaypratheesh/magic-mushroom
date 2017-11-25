@@ -19,15 +19,13 @@ class NotFound extends React.Component {
 
   render() {
     let context = this;
-    let notFoundText =  "It looks like you are lost";
-    let notFoundAnotherText = "The page you are looking no longer exists";
+    let notFoundText = translateNotFound[context.store.selectedLang] || "It looks like you are lost";
+    let notFoundAnotherText = translateNotFoundAnother[context.store.selectedLang] || "The page you are looking no longer exists";
     return (
-      <div className={`lang_${context.store.selectedLang || 'en'}`}>
+      <div className={`lang_${context.store.selectedLang}`}>
         <header className="defult">
           <div className="lhs">
             <div className="action">
-              <Link className="btn_bk" to={`/news/${context.store.selectedCountry || 'en'}/${langMapping[context.store.selectedLang || 'en']}`}>
-              </Link>
             </div>
           </div>
         </header>

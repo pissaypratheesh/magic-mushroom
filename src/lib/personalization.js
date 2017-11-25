@@ -1,165 +1,187 @@
 import Fingerprint2 from 'fingerprintjs2';
-import idb from 'idb';
 import {makeRequest} from '../lib/makeRequest'
-var deviceInfo = require('./deviceDetect');
+import {pushGeneric} from './instrumentation';
+import {appVersion} from '../config/constants'
+import {idbArrToJson,indexedDb} from './indexedDb';
 
+var deviceInfo = require('./deviceDetect');
 var ClientJS = require('clientjs/dist/client.min');
 var _ = require('underscore');
 var cookie = require('js-cookie');
 var time = 36500; // 100 years in days
+var dbFns = indexedDb('personalization','signature');
 
 _.mixin(require('./mixins'));
 
-
 let personalization = {
+
   // 1.Creates the fingerprint
   // 2.Makes n/w call to get the clientid for the fingerprint
   // 3.Stores the fingerprint and clientid in localStorage and cookie and returns the same
+
   getFingerprint(store, callback){
     let uniqueFp;
     let context = this;
     this.getFromFingerprintjs(function (fpFromFpjs, comp) {
-      var client = context.getClientData(fpFromFpjs);
+      var client = context.getClientData(fpFromFpjs),
+          calltype = "handshake";
       uniqueFp = fpFromFpjs; // Replace with fingerprint to use clientjs fingerprint
-      var urlObj = {urlList:[{url:'/apis/getclientid', source:"client", method:'get',body:context.getClientidBody(store, client)}]};
-      makeRequest(urlObj,function (err, resp) {
-        let respHeaders = _.at(resp,'0.headers');
-        let clientid =  _.at(resp,'0.data.clientid');
-        if(err || !clientid){
-          return callback(err || "no clientid", null);
+      context.fetchDataFromStorage((err, storageResp)=>{
+        if(err || _.isEmpty(storageResp)){
+          calltype = 'install';
         }
-        clientid && (client.clientid = clientid);
-        _.extend(client,{ip: respHeaders.ip, clientData:respHeaders.clientData});
-        context.storeData({
-          clientId: clientid,
-          fingerprint: uniqueFp
+        client.calltype = calltype;
+        storageResp && _.extend(client,{clientid: storageResp.clientId,signature:storageResp.signature,fingerprint:storageResp.fingerprint || fpFromFpjs});
+        context.addGlobalParams(client,store)
+        var urlObj = {
+          urlList:[{
+              url:'/apis/getclientid?calltype='+calltype,
+              method:'post',
+              body:context.getClientidBody(store, client)
+            }],
+          source:'client',
+          store:context.store
+        };
+        makeRequest(urlObj,function (err, resp) {
+          let respHeaders = _.at(resp,'0.headers');
+          let clientid =  _.at(resp,'0.data.data.clientId');
+          let signature = respHeaders && respHeaders.cookie;
+
+          if(err || !clientid){
+            // Sending offline instrumentation calls
+            context.instrumentationCalls(client);
+            return callback(err || "no clientid", null);
+          }
+          clientid && (client.clientid = clientid);
+          _.extend(client,{ip: _.at(respHeaders,'ip'), clientData:_.at(respHeaders,'clientData')});
+
+          // Instrumentation calls
+          context.instrumentationCalls(client);
+
+          //update global data
+          window.__dhpwa__.commonParams.client_id = clientid;
+          window.__dhpwa__.clientData.clientid = clientid;
+          window.__dhpwa__.clientData.signature = signature;
+
+          //store the updated data in cookie/localstorage/indexeddb
+          context.storeData({
+            clientId: clientid,
+            fingerprint: uniqueFp,
+            signature: signature
+          });
+
+          callback(null,{
+            clientId: clientid,
+            client: client
+          })
         })
-        callback(null,{
-          clientId: _.at(resp,'0.data.clientid'),
-          client: client
-        })
+
       })
     })
+  },
+
+  addGlobalParams(client, store){
+    let os = _.at(client,'deviceInfo.os') || _.at(client,'deviceInfo.browserInfo.os');
+    let osFamily = os && (os.family || os.name);
+    let browser = _.at(client,'deviceInfo.browserInfo.browser')
+    let device = _.at(client,'deviceInfo.browserInfo.device')
+    var commonParams = {
+      user_app_ver: appVersion,
+      user_connection: navigator.connection.effectiveType || navigator.connection.type,
+      user_language_primary: store.selectedLang,
+      user_os_platform: osFamily ? ('pwa_' + osFamily.toLowerCase()) : 'pwa_unknown',
+      user_os_version: os ? os.version : undefined,
+      user_browser: browser ? (browser.name + ' ' + browser.major) : undefined,
+      user_browser_ver: browser ? browser.version : undefined,
+      user_agent: _.at(client,'deviceInfo.browserInfo.ua'),
+      user_type: 'pwa',
+      user_handset_maker: _.at(device,'vendor'),
+      user_handset_model:_.at(device,'model'),
+      user_device_screen_resolution: _.screenResRoundOff(_.at(client,'deviceInfo.resolution')),
+      user_device_memory: undefined,
+      user_os_name: osFamily && osFamily.toLowerCase(),
+      client_id: client.clientid,
+      event_section: 'pwa_news',
+      utm_raw: undefined,
+      utm_source:undefined,
+      utm_medium:undefined,
+      utm_term:undefined,
+      utm_content:undefined,
+      event_name:undefined,
+    };
+    window.__dhpwa__ = _.deepExtend({},
+      window.__dhpwa__ || {},
+      {commonParams : commonParams},
+      {clientData:_.pick(client,'fingerprint','signature','clientid')}
+    )
+  },
+
+  instrumentationCalls(client){
+    // TODO : add gcm_id
+    pushGeneric({
+      event_section:'pwa_app',
+      client_id: client.clientid,
+      device_id: client.fingerprint,
+      gcm_id: 'to_be_added'
+    },'DEVICE_GOOGLE_IDS')
   },
 
   storeData(data){
-    idb.open('personalization',1,(upgradedb)=>{
-      var store = upgradedb.createObjectStore('signature',{
-        keyPath: 'id'
-      })
+    dbFns.clear().then((data1)=>{
       _.each(data,(val,key)=>{
+        //Remove
+        cookie.remove(key);
+        window.localStorage.removeItem(key);
+
+        //add
         cookie.set(key, val, time);
         window.localStorage.setItem(key, val);
-        store.put({id:key,val:val})
+        dbFns.set(key,val)
       });
+    }).catch((err)=>{
+      console.error("Error clearing db:",err)
     })
-
-    /*  //Code to read from indexdb
-        const dbPromise = idb.open('personalization',1,(db)=>{
-          db.createObjectStore('signature')
-        })
-        const idbKeyval = {
-          get(key) {
-            return dbPromise.then(db => {
-              return db.transaction('signature')
-                .objectStore('signature').get(key);
-            });
-          },
-        }
-       idbKeyval.get('fingerprint').then(val => console.log("first-->",val));//{id: "fingerprint", val: "01e84c38a1f3f2392ca421c779bffbf9"}
-       idbKeyval.get('clientId').then(val => console.log("sec===>",val))//{id: "clientId", val: "pratheesh"}
-    */
   },
 
   // Should be used while the app is running and NOT at the start of the app
-  fetchDataFromStorage(){
+  fetchDataFromStorage(callback){
     let clientid = cookie.get('clientid'),
-      fingerprint = cookie.get('fingerprint');
-    if(!clientid || !fingerprint){
+      fingerprint = cookie.get('fingerprint'),
+      signature = cookie.get('signature');
+    if(!clientid || !fingerprint || !signature){
       !clientid && (clientid = window.localStorage.getItem('clientid'))
       !fingerprint && (fingerprint = window.localStorage.getItem('fingerprint'))
+      !signature && (signature = window.localStorage.getItem('signature'))
     }
-    if(clientid && fingerprint)
-      return {clientid, fingerprint};
+    if(clientid && fingerprint && signature)
+      return callback(null,{clientid, fingerprint, signature});
 
-    return this.getDataFromIndexDb((err, data)=>{
-      if(err){
-        //Case when clientid/fingerprint is not present in cookie or localStorage or indexDb
-        /*return this.getFingerprint((err,data)=>{
-          if(!err){
-            return {
-              clientid: data.clientId,
-              fingerprint: data.client.fingerprint
-            }
-          }
-        });*/
-      }
-      return data;
+    return dbFns.getAll().then((data) => {
+        return callback(null,idbArrToJson(data));
+    }).catch((err)=>{
+      return callback(err,null)
     })
   },
 
-  getDataFromIndexDb(callback){
-    const dbPromise = idb.open('personalization',1,(db)=>{
-      db.createObjectStore('signature')
-    });
-    let data = {};
-    const idbKeyval = {
-      get(key) {
-        return dbPromise.then(db => {
-          return db.transaction('signature')
-            .objectStore('signature').get(key);
-        });
-      },
-    };
-    return idbKeyval.get('fingerprint').then(fingerprint => {
-      idbKeyval.get('clientId').then(clientid => {
-        callback(null, {
-          fingerprint: fingerprint.val,
-          clientid: clientid.val
-        })
-      }).catch((err)=>{
-        callback(err,null)
-      })
-    }).catch((err)=>{
-      callback(err,null)
-    });
-  },
-
   getClientidBody(store, client){
-    let clientId = client.clientid;
-    /*if(!clientId){
-      let storage = this.fetchDataFromStorage();
-      clientId = storage && storage.clientid;
-    }*/
     let body = {
-      "cp": {
-        "al": store.selectedLang,
-        "av": store.appVersion,
-        "os": "pwa",
-        "e": "india",
-        "h": _.at(client,'deviceInfo.deviceSize.height'),
-        "l": store.selectedLang,
-        "osv": "os version if applicable>",
-        "w": _.at(client,'deviceInfo.deviceSize.width'),
+      "clientInfo": {
+        "appId":"in.dailyhunt.pwa",
+        "appLanguage": store.selectedLang,
+        "appVersion": store.appVersion,
+        "device": "pwa",
+        "edition": "india",
+        "height": _.at(client,'deviceInfo.deviceSize.height'),
+        "primaryLanguage": store.selectedLang,
+        "width": _.at(client,'deviceInfo.deviceSize.width'),
         "udid": client.fingerprint
       },
-      "instType": "INSTALL",
-      'rfr':"utm_source=DailyHuntHome"
-    }
-    clientId && (body.cp.cid = clientId);
+      "photogallerySupported":true,
+      "bcdnImageSupported":true,
+      "chronoInboxSupported": true,
+      "inboxFeedSupported": true
+    };
     return body;
-  },
-
-  // Should be used at the start of the app and NOT  while the app is running
-  fetchData(){
-   /* return this.getFingerprint((err,data)=>{
-      if(!err){
-        return {
-          clientid: data.clientId,
-          fingerprint: data.client.fingerprint
-        }
-      }
-    })*/
   },
 
   getFromFingerprintjs(callback){
@@ -176,20 +198,10 @@ let personalization = {
     }
   },
 
-  sendInstrumentData(data){
-    //Create body and make call
-    var urlObj = {urlList:[{url:'/apis/getclientid?fp=' + data, source:"client", method:'get'}]};
-    makeRequest(urlObj,function (err, resp) {
-      if(err){
-        console.error(" error sending instrumentation data");
-        return;
-      }
-      console.log("Successfully sent instrument data:",data);
-    })
-  },
-
   getLocation(callback) {
-    if (navigator.geolocation) {
+    callback("Disabled for now",null);
+    // Below code for enabling the location permission pop up
+    /*if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((pos) => {
         callback(null, {lat: pos.coords.latitude, long: pos.coords.longitude})
       }, (error) => {
@@ -209,8 +221,8 @@ let personalization = {
         }
       });
     } else {
-      console.log("Geolocation is not supported by this browser", null);
-    }
+      console.error("Geolocation is not supported by this browser", null);
+    }*/
   },
 }
 

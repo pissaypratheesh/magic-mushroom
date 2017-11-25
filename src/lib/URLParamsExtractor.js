@@ -1,21 +1,18 @@
+import {} from "../config/constants"
 var _ = require('underscore');
 
 _.mixin(require('./mixins'));
 
+let helpers = {
+}
+
 const URLParamsExtractor =  {
 
-
-  languages(params){
-    let url = params.supportedLanguages ? [] : [{url: "/apis/languages", method: "get", params}],
-      updateFunction = "updateLanguages";
-    return {
-      url,
-      updateFunction
-    }
-  },
-
   home(params){
-    let url = [{url: "/apis/cities/orissa", method: "get", params}],
+    let url = [
+        {url: "/apis/city/stateId/1", method: "get", params},
+        {url: "/apis/entity/category/all", method: "get", params},
+      ],
       updateFunction = "updateHome";
     return {
       url,

@@ -4,24 +4,17 @@
 
 var express = require('express');
 var router = express.Router()
-var urlMap = require('../../config/urls.js');
-
+var urlMap2 = require('../../config/urls2.js');
 var _ = require('underscore');
 var path = require('path');
-var ipLocator = require('ip-locator')
-var defHeader =  require('../../lib/httpHeader');
 const webpush = require('web-push');
 const queryString = require('query-string')
 import {makeRequest} from "../../lib/makeRequest"
-import { cacheAPIHeader, isProduction } from '../../config/constants'
+import {  isProduction } from '../../config/constants'
 import {StoSTimeout} from '../../config/constants'
 import jsonFormatter from '../jsonFormatter';
-import statesMapping from '../../config/statesMapping'
-
-let header = {
-  headers:defHeader.header
-};
-let cacheHeaders = 'public, max-age=' + cacheAPIHeader;
+import {urlMap, baseUrl} from '../../config/urls2'
+let cacheHeaders = 'public, max-age=' + 180;
 const timeout = { timeout: StoSTimeout};
 _.mixin(require('../../lib/mixins'));
 
@@ -49,173 +42,25 @@ var options = {
   }
 };
 
-router.get('/apis/cities/:state',function (req, res) {
-  return res.status(200).json([{name:'blr'},{name:'hyd'},{name:'mys'}]);
-/*
-
-  var urlObj = {urlList:[{url:urlMap.cities + (statesMapping[req.params.state] || 1),timeout:timeout.timeout, headers:header.headers, method:'get'}]}
-  return makeRequest(urlObj,(err, resp)=> {
-    if (err) {
-      return res.status(500).send({error: "server error"});
-    }
-    return res.status(200).json([{name:'blr'},{name:'hyd'},{name:'mys'}]);
-  });
-*/
-})
-
-
-//Below to be deleted
-
-
-router.all('/apis/news', function(req, res) {
-  var url = req.query.url ? decodeURIComponent(req.query.url) : (urlMap.news  + (req.query.langCode || "en") );
-  var reqQuery = req.query;
-  if(req.query.url){
-    reqQuery = queryString.parse(url.split("?")[1])
-  }
-  !_.isUndefined(req.query.nextIndex) && (reqQuery.nextIndex = req.query.nextIndex)
-
-  //Supports multiple calls at ones, like url0, url1, url2
-  if(req.query.url0){
-    return jsonFormatter.fetchMultipleNews(req,function (resObj,err) {
-      var respObj = _.extend({},{results: resObj},req.query)
-      if(!err){
-        //res.setHeader('Cache-Control',cacheHeaders);
-        return res.status(200).send(respObj)
-      }
-      return res.status(500).send({error:"server error"});
+function extractSignature(cookie) {
+  if(cookie){
+    let list = cookie.split(';');
+    return _.find(list,(val)=>{
+      let keyVal = val.split('=');
+      return (keyVal[0] === signatureName);
     });
   }
-  var urlObj = {urlList:[{url,timeout:timeout.timeout, headers:header.headers, method:'get'}]}
-  return makeRequest(urlObj,(err, resp)=>{
-    if(err){
-      return res.status(500).send({error:"server error"});
-    }
-    var formattedResp = jsonFormatter.news(resp[0], _.deepExtend({},reqQuery,req.query));
-    formattedResp && _.extend(formattedResp,req.query);
-    //res.setHeader('Cache-Control',cacheHeaders);
-    return res.status(200).json(formattedResp);
-  })
-});
-
-router.get('/apis/proxy',function (req, res) {
-  var urlObj = {urlList:[{url:decodeURIComponent(req.query.url),timeout:timeout.timeout, headers:header.headers, method:'get'}]};
+}
+router.get('/apis/*',function (req, res) {
+  console.log(" urllll-->",baseUrl + req.url.split('/apis')[1]);
+  var urlObj = {urlList:[{url: baseUrl + req.url.split('/apis')[1],timeout:timeout.timeout, method:'get', clientReq : req}],source:'server'}
   return makeRequest(urlObj,(err, resp)=> {
     if (err) {
       return res.status(500).send({error: "server error"});
     }
-    //res.setHeader('Cache-Control', cacheHeaders);
-    return res.status(200).json(_.at(resp, '0.data') || {});
-  })
-});
-
-router.get('/apis/moredetails',function (req, res) {
-  jsonFormatter.moreDetails(req, function (err, data) {
-    if(err){
-      return res.status(500).send({error: err});
-    }
-    return res.status(200).json(data);
-  })
-});
-
-//This is for fetching landing newspage topics like entertainment etc
-router.get('/apis/alltopics', function(req, res) {
-  return jsonFormatter.fetchAllTopicsWithData(req,function (err,resp) {
-    if(err || !resp){
-     return res.status(500).send({error: "server error"});
-    }
-    //res.setHeader('Cache-Control',cacheHeaders);
-    return res.status(200).send(resp)
-  })
-});
-
-//This is for fetching landing newspage topics like entertainment etc
-router.post('/apis/getclientid', function(req, res) {
-  var urlObj = {urlList:[{url:urlMap.getClientId, source:'server', timeout:timeout.timeout, headers:header.headers, method:'post', body:req.body}]};
-  return res.status(200).json({clientid: "pratheesh"});
-  /*return makeRequest(urlObj,(err, resp)=> {
-    if (err) {
-      //return res.status(500).send({error: "server error"});
-    }
-    return res.status(200).json({clientid: "pratheesh"});
-  })*/
-});
-
-//This is for fetching topics landing newspage topics like entertainment etc
-router.get('/apis/topics', function(req, res) {
-  var urlObj = {urlList:[{url:urlMap.topics + (req.query.langCode || "en"),timeout:timeout.timeout, headers:header.headers, method:'get'}]};
-  return makeRequest(urlObj,(err, resp)=> {
-    if (err) {
-      return res.status(500).send({error: "server error"});
-    }
-    //res.setHeader('Cache-Control', cacheHeaders);
-    return res.status(200).json(jsonFormatter.trends(resp && resp[0]));
-  })
-});
-
-router.get('/apis/details/:id', function(req, res) {
-  if(!req.params.id) {
-    return res.status(500).send("Id required");
-  }
-  var urlObj = {urlList:[{url:urlMap.details + req.params.id,timeout:timeout.timeout, headers:header.headers, method:'get'}]};
-  return makeRequest(urlObj,(err, resp)=> {
-    if (err) {
-      return res.status(500).send({error: "server error"});
-    }
-    //res.setHeader('Cache-Control', cacheHeaders);
-    return res.status(200).json(jsonFormatter.details(resp && resp[0]));
-  })
-});
-
-router.get('/apis/detailsdirect/:id',function (req, res) {
-  if(!req.params.id) {
-    return res.status(500).send("Id required");
-  }
-  jsonFormatter.detailsdirect(req,function (err,respObj) {
-    if(err){
-      return res.status(500).send("Id required");
-    }
-    return res.status(200).json(respObj);
-  })
-});
-
-router.get('/apis/allgroups', function(req, res) {
-  var urlObj = {urlList:[{url:urlMap.group,timeout:timeout.timeout, headers:header.headers, method:'get'}]};
-  return makeRequest(urlObj,(err, resp)=> {
-    if (err) {
-      return res.status(500).send({error: "server error"});
-    }
-    var formattedResp = jsonFormatter.groups(resp&&resp[0], req.query.langCode || "en");
-    _.extend(formattedResp,req.query);
-    //res.setHeader('Cache-Control',cacheHeaders);
-    return res.status(200).json(formattedResp);
-  })
-});
-
-router.get('/apis/languages', function(req, res) {
-  var urlObj = {urlList:[{url:urlMap.lang,timeout:timeout.timeout, headers:header.headers, method:'get'}]};
-  return makeRequest(urlObj,(err, resp)=> {
-    if (err) {
-      return res.status(500).send({error: "server error"});
-    }
-    //res.setHeader('Cache-Control', cacheHeaders);
-    return res.status(200).json(jsonFormatter.languages(resp && resp[0]));
-  })
-});
-
-router.get('/apis/npByCategory', function(req, res) {
-  var url = req.query.url || (urlMap.npByCategory  + (req.query.edition || "india") + "&langCode=" + (req.query.langCode || "en") + "&groupKey=" + (req.query.grpKey || "news") + "&pageSize=" + (req.query.pageSize || "20"));
-  var urlObj = {urlList:[{url:url,timeout:timeout.timeout, headers:header.headers, method:'get'}]};
-  return makeRequest(urlObj,(err, resp)=> {
-    if (err) {
-      return res.status(500).send({error: "server error"});
-    }
-    var formattedResp = jsonFormatter.npByCategory(resp&&resp[0]);
-    _.extend(formattedResp, req.query);
-    //res.setHeader('Cache-Control',cacheHeaders);
-    return res.status(200).json(formattedResp);
-  })
-});
+    return res.status(200).json(_.at(resp,'0.data')||{});
+  });
+})
 
 router.post('/apis/pushnotification',function(req, res){
   var data = req.body.dataToSend || dataToSend

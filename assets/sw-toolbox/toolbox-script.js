@@ -31,6 +31,7 @@
       maxAgeSeconds: 604800 //1 week: 60 * 60 * 24 * 7
     }
   });
+
   global.toolbox.router.get('/assets/*', global.toolbox.cacheFirst, {
     cache: {
       name: 'dhassets',

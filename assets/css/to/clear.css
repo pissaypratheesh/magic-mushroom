@@ -1,2 +1,0 @@
-/***** clear ele *****/
-header .siteNav .LHS:after,header nav:after,.detailsWarp article .srcShare:after,header.dtls .details_hd:after,.popup .inr .size .txt:after{content:" ";display:block;clear:both;line-height:0;height:0}
