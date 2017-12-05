@@ -1,6 +1,7 @@
 import React from 'react';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
+import { Link } from 'react-router-dom'
 import PropTypes from "prop-types";
 import DataWrapper from "../components/common/DataWrapper";
 import { inject, observer } from "mobx-react";
@@ -166,7 +167,7 @@ class Home extends React.Component {
                 <input type="text" placeholder="speciality, doctor, clinics, hospital,ambulance etc…"/>
               </li>
               <li>
-                <a href="#" className="btn col_blue FR">Search</a>
+                <Link to={"/list/city/locality"} className="btn col_blue FR">Search</Link>
                 <a href="#" className="btn col_gry FR">Reset</a>
               </li>
             </ul>

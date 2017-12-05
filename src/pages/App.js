@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Route, Link, Redirect, Switch ,withRouter} from "react-router-dom";
 import { inject, observer } from "mobx-react";
 import Home from './Home'
+import List from './List'
 import NotFound from "./NotFound"
 var cookies = require('js-cookie');
 var _ = require('underscore');
@@ -52,6 +53,13 @@ class App extends Component {
             path="/home"
             render={props => {
               return <Home {...props}/>}
+            }
+          />
+          <Route
+            exact
+            path="/list/:city/:locality"
+            render={props => {
+              return <List {...props}/>}
             }
           />
           <Route
