@@ -16,17 +16,24 @@ _.mixin(require('../lib/mixins'));
 export default class AppState {
 
   //
+  @observable states;
   @observable cities;
   @observable localities;
   @observable categories;
+  @observable selectedState;
   @observable selectedCity;
   @observable selectedLocality;
-
+  @observable selectedSuggestion;
 
   @observable items;
   @observable item;
 
   constructor() {
+    this.states = {
+      'orissa':{id:'1'},
+      'karnataka':{id:'2'},
+    };
+    this.selectedState = {name:'orissa',id:1};
     this.cities = [];
     this.localities = [];
 
@@ -67,45 +74,55 @@ export default class AppState {
     var context = this;
     let ignoreInit = _.at(params,'query.ignoreInit') &&  _.bool( _.at(params,'query.ignoreInit')) && !!_.at(this,'topicsList.0.data.data')
     _.extend(params,context);
+
     // Fetch in an array all the calls that need to be fired with its params and method
-    let dataToFetch = _.at(params,'dataToFetch') || routeUrlMap(params)[pattern];
-
-    if(!dataToFetch || _.isEmpty(dataToFetch.urlList) || ignoreInit){
-      return context[dataToFetch.updateFunction](null, url, params)
-    }
-    dataToFetch.source = "client";
-    dataToFetch.store = context;
-    makeRequest(dataToFetch,(error, results)=>{
-      if(error){
-        UIEffects.showServerError(error);
+    routeUrlMap(params, pattern, function(dataToFetch){
+      if(!dataToFetch || _.isEmpty(dataToFetch.urlList) || ignoreInit){
+        return context[dataToFetch.updateFunction](null, url, params)
       }
-      let headers = [];
-      let resp = results && results.map((r) => {
-        //!window.__dhpwa__.enableClientLogs && (r.headers.enablelogs === "true") && (window.__dhpwa__.enableClientLogs = true);
-        headers.push(r.headers);
-        return (r && r.data);
-      });
-      context[dataToFetch.updateFunction](resp || null, url, params,{dataToFetch,headers});
-    })
+      dataToFetch.source = "client";
+      dataToFetch.store = context;
+      makeRequest(dataToFetch,(error, results)=>{
+        if(error){
+          UIEffects.showServerError(error);
+        }
+        let headers = [];
+        let resp = results && results.map((r) => {
+          //!window.__dhpwa__.enableClientLogs && (r.headers.enablelogs === "true") && (window.__dhpwa__.enableClientLogs = true);
+          headers.push(r.headers);
+          return (r && r.data);
+        });
+        context[dataToFetch.updateFunction](resp || null, url, params,{dataToFetch,headers});
+      })
+    });
   }
-
-
 
   @action updateHome(resp, url, params){
     let context = this;
-    if(_.at(resp,'0')){
-      this.cities = _.map(resp[0],(val)=>{
+    if(_.at(resp,'0.data')){
+      this.cities = _.map(resp[0]['data'],(val)=>{
         return _.deepExtend({
           label: val.cityName,
           value: val.cityId
         },val);
       })
     }
-    if(_.at(resp,'1')){
-      this.categories = resp[1];
+    if(_.at(resp,'1.data')){
+      this.categories = resp[1]['data'];
+    }
+    if(_.at(resp,'2.data')){
+      this.categorySuggest = _.map(resp[2]['data'],(val)=>{
+        return _.deepExtend({
+          label: val.displayName,
+          value: val.entitySubCategoryId
+        },val);
+      })
     }
   }
 
+  @action updateSearchList(resp, url, params){
+      console.log(" repspspsppsps-->",resp[0])
+  }
 
   @action updateData(objArr){
     let context = this;

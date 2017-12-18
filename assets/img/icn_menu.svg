@@ -1,19 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="38px" height="26px" viewBox="0 0 38 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="20px" height="15px" viewBox="0 0 20 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 43 (38999) - http://www.bohemiancoding.com/sketch -->
-    <title>ic_menu_black_24px</title>
+    <title>Shape</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="sprite" transform="translate(-6.000000, -12.000000)">
-            <g id="Group-2">
-                <g id="Group">
-                    <g id="ic_menu_black_24px">
-                        <polygon id="Shape" points="0 0 50 0 50 50 0 50"></polygon>
-                        <path d="M6.25,37.5 L43.75,37.5 L43.75,33.3333333 L6.25,33.3333333 L6.25,37.5 L6.25,37.5 Z M6.25,27.0833333 L43.75,27.0833333 L43.75,22.9166667 L6.25,22.9166667 L6.25,27.0833333 L6.25,27.0833333 Z M6.25,12.5 L6.25,16.6666667 L43.75,16.6666667 L43.75,12.5 L6.25,12.5 L6.25,12.5 Z" id="Shape" fill="#4A4A4A" fill-rule="nonzero"></path>
-                    </g>
-                </g>
-            </g>
-        </g>
+    <g id="app-all_user_doct" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M1.42857143,2.85714286 L18.5714286,2.85714286 C19.36,2.85714286 20,2.21714286 20,1.42857143 C20,0.64 19.36,0 18.5714286,0 L1.42857143,0 C0.64,0 0,0.64 0,1.42857143 C0,2.21714286 0.64,2.85714286 1.42857143,2.85714286 Z M18.5714286,5.71428571 L1.42857143,5.71428571 C0.64,5.71428571 0,6.35428571 0,7.14285714 C0,7.93142857 0.64,8.57142857 1.42857143,8.57142857 L18.5714286,8.57142857 C19.36,8.57142857 20,7.93142857 20,7.14285714 C20,6.35428571 19.36,5.71428571 18.5714286,5.71428571 Z M18.5714286,11.4285714 L1.42857143,11.4285714 C0.64,11.4285714 0,12.0685714 0,12.8571429 C0,13.6457143 0.64,14.2857143 1.42857143,14.2857143 L18.5714286,14.2857143 C19.36,14.2857143 20,13.6457143 20,12.8571429 C20,12.0685714 19.36,11.4285714 18.5714286,11.4285714 Z" id="Shape" fill="#FFFFFF" fill-rule="nonzero"></path>
     </g>
 </svg>

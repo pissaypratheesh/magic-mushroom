@@ -75,33 +75,35 @@ class MultipleCardListing extends React.Component {
         selIdIndex = selIdDet && selIdDet.index;
     let list = _.at(context, 'data.rows');
     return (
-      <div id={context.data.id} className="dh-list-item">
-        <InfiniteLoader
-          isRowLoaded={this._isRowLoaded}
-          loadMoreRows={this._loadMoreRows}
-          rowCount={list && list.length}
-          threshold={3}
-        >
-          {({onRowsRendered, registerChild}) => (
-            <AutoSizer disableHeight>
-              {({width}) => (
-                <List
-                  ref={registerChild}
-                  className={""}
-                  height={665}
-                  onRowsRendered={onRowsRendered}
-                  rowCount={(list && list.length) || 0}
-                  rowHeight={useDynamicRowHeight ? this._getRowHeight : 178}
-                  scrollToIndex={selIdIndex}
-                  scrollToAlignment="center"
-                  rowRenderer={this._rowRenderer}
-                  onScroll={this._onScroll}
-                  width={width}
-                />
-              )}
-            </AutoSizer>
-          )}
-        </InfiniteLoader>
+      <div id={context.data.id} className="tp-pad serp-data">
+        <ul className="serp_list">
+          <InfiniteLoader
+            isRowLoaded={this._isRowLoaded}
+            loadMoreRows={this._loadMoreRows}
+            rowCount={list && list.length}
+            threshold={3}
+          >
+            {({onRowsRendered, registerChild}) => (
+              <AutoSizer disableHeight>
+                {({width}) => (
+                  <List
+                    ref={registerChild}
+                    className={""}
+                    height={665}
+                    onRowsRendered={onRowsRendered}
+                    rowCount={(list && list.length) || 0}
+                    rowHeight={useDynamicRowHeight ? this._getRowHeight : 178}
+                    scrollToIndex={selIdIndex}
+                    scrollToAlignment="center"
+                    rowRenderer={this._rowRenderer}
+                    onScroll={this._onScroll}
+                    width={width}
+                  />
+                )}
+              </AutoSizer>
+            )}
+          </InfiniteLoader>
+        </ul>
       </div>
     );
   }
@@ -253,7 +255,6 @@ class MultipleCardListing extends React.Component {
   _rowRenderer ({ index,isScrolling, key, style }) {
     const  list  =  _.at(this,'data.rows')
     const row = list[index]
-    console.log(" \n\n index and card-->",index,row)
     const { loadedRowsMap } = this.state
     let content
     if (loadedRowsMap[index] === STATUS_LOADED) {

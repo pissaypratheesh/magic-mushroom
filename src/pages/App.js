@@ -50,25 +50,25 @@ class App extends Component {
         <Switch>
           <Route
             exact
-            path="/home"
+            path="/"
+            render={props => {
+              let state = cookies.get('selectedState') || "orissa"
+              return <Redirect to={`/state/${state}`}/>
+            }}
+          />
+          <Route
+            exact
+            path="/state/:state"
             render={props => {
               return <Home {...props}/>}
             }
           />
           <Route
             exact
-            path="/list/:city/:locality"
+            path="/state/:state/searchlist"
             render={props => {
               return <List {...props}/>}
             }
-          />
-          <Route
-            exact
-            path="/"
-            render={props => {
-              let lang = cookies.get('selectedLang') || "en"
-              return <Redirect to={`/home`}/>
-            }}
           />
           <Route
             path="*"

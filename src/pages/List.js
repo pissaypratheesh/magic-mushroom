@@ -1,6 +1,7 @@
 import React from 'react';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
+import {withRouter} from "react-router-dom";
 import { Link } from 'react-router-dom'
 import PropTypes from "prop-types";
 import DataWrapper from "../components/common/DataWrapper";
@@ -41,26 +42,25 @@ class Home extends React.Component {
     let context = this;
     return (
       <div>
-        <header className="home-hd">
-          <div className="aausadh-logo"></div>
-          <div className="login"></div>
+        <header className="others-hd">
+          <div className="btn_bk" onClick={(e)=>{ const {history} = context.props; history.goBack();}}></div>
+          <h1>Eye Doctor (205)</h1>
         </header>
 
         <MultipleCardListing {...this.props}/>
 
-        <footer>
-          <div className="social">
-            <ul>
-              <li><a href="" className="icn_fb"></a></li>
-              <li><a href="" className="icn_twitte"></a></li>
-              <li><a href="" className="icn_youtube"></a></li>
-            </ul>
+        <section className="srt_filter">
+          <div className="btn_srt">
+            <span className="icn_srt"><em>Sort</em></span>
           </div>
-          <p>Copyright &copy; 2017 aausadh.com | All Rights Reserved</p>
-        </footer>
+          <div className="btn_filter">
+            <span className="icn_filter"><em>Filter</em></span>
+          </div>
+        </section>
+
       </div>
     )
   }
 }
 
-export default Home;
+export default withRouter(Home);

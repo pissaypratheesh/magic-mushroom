@@ -25,6 +25,7 @@ class Home extends React.Component {
     this.store = this.props.store.appState;
     this.handleChangeStates = this.handleChangeStates.bind(this);
     this.handleChangeLocalities = this.handleChangeLocalities.bind(this);
+    this.handleChangeSuggestion = this.handleChangeSuggestion.bind(this);
   }
 
   componentDidMount(){
@@ -114,11 +115,11 @@ class Home extends React.Component {
   handleChangeStates = (selectedOption) => {
     console.log("Selected:", selectedOption);
     let context = this;
-    makeRequest({ urlList:[{url:'/apis/locality/cityId/'+selectedOption.cityId,method:'get'}],source:'client'},(err,resp)=>{
-      if(_.at(resp,'0')){
+    makeRequest({ urlList:[{url:'/apis/aasaudh/locality/cityid/?cityid='+selectedOption.cityId,method:'get'}],source:'client'},(err,resp)=>{
+      if(_.at(resp,'0.data')){
         context.store.updateData({
           selectedCity: selectedOption,
-          localities: _.map(_.at(resp,'0.data'),(val)=>{
+          localities: _.map(_.at(resp,'0.data.data'),(val)=>{
             return _.deepExtend({
               label: val.localityName,
               value: val.localityId
@@ -136,9 +137,17 @@ class Home extends React.Component {
     })
   }
 
+  handleChangeSuggestion = (options) => {
+    console.log(" in handleChangeSuggession-->",options)
+    this.store.updateData({
+      selectedSuggestion:options
+    })
+  }
+
   render() {
     let context = this;
-    console.log(" selected city and locality-->",_.at(this,'store.selectedCity.cityName'),_.at(this,'store.selectedLocality.localityName'))
+    let scrollableCategories =  _.at(this,'store.categories');
+    let categorySuggest = _.at(this,'store.categorySuggest');
     return (
       <div>
         <header className="home-hd">
@@ -164,64 +173,33 @@ class Home extends React.Component {
                   options={toJS(_.at(context,'store.localities') || [])}/>
               </li>
               <li>
-                <input type="text" placeholder="speciality, doctor, clinics, hospital,ambulance etc…"/>
+                <Select
+                  name="form-field-name"
+                  value={_.at(this,'store.selectedSuggestion') || ""}
+                  onChange={this.handleChangeSuggestion}
+                  options={toJS(categorySuggest || [])}/>
               </li>
               <li>
-                <Link to={"/list/city/locality"} className="btn col_blue FR">Search</Link>
+                <Link to={`/state/${context.store.selectedState.name}/searchlist?cityid=${_.at(context,'store.selectedCity.cityId')}&localityid=${_.at(context,'store.selectedLocality.localityId')}&categoryid=${_.at(context,'store.selectedSuggestion.entitySubCategoryId')}`}
+                      className="btn col_blue FR">Search</Link>
                 <a href="#" className="btn col_gry FR">Reset</a>
               </li>
             </ul>
           </div>
+
           <div className="navSlider">
             <ul>
-              <li>
-                <a href="">
-                  <picture>
-                    <img src="assets/img/img_doctor.jpg" alt=""/>
-                  </picture>
-                  <h2>Doctor</h2>
-                </a>
-              </li>
-              <li>
-                <a href="">
-                  <picture>
-                    <img src="assets/img/img_hospital.jpg" alt=""/>
-                  </picture>
-                  <h2>Hospitals</h2>
-                </a>
-              </li>
-              <li>
-                <a href="">
-                  <picture>
-                    <img src="assets/img/img_medicin.jpg" alt=""/>
-                  </picture>
-                  <h2>Medicine</h2>
-                </a>
-              </li>
-              <li>
-                <a href="">
-                  <picture>
-                    <img src="assets/img/img_amb.jpg" alt=""/>
-                  </picture>
-                  <h2>Ambulance</h2>
-                </a>
-              </li>
-              <li>
-                <a href="">
-                  <picture>
-                    <img src="assets/img/img_bldbnk.jpg" alt=""/>
-                  </picture>
-                  <h2>Blood bank</h2>
-                </a>
-              </li>
-              <li>
-                <a href="">
-                  <picture>
-                    <img src="assets/img/img_diagnostics.jpg" alt=""/>
-                  </picture>
-                  <h2>Diagnostics</h2>
-                </a>
-              </li>
+              {scrollableCategories && _.map(scrollableCategories,(cats)=>{
+                  return (<li>
+                    <a href="">
+                      <picture>
+                        <img src="assets/img/img_doctor.jpg" alt=""/>
+                      </picture>
+                      <h2>{cats.entityCategoryName}</h2>
+                    </a>
+                </li>);
+              })
+              }
             </ul>
           </div>
         </section>

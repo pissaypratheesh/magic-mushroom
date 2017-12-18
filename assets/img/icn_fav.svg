@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="12px" viewBox="0 0 14 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43 (38999) - http://www.bohemiancoding.com/sketch -->
+    <title>icn_fav</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="app-all_user_doct" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.5">
+        <g id="icn_fav" transform="translate(-3.000000, -4.000000)" fill-rule="nonzero" fill="#A5A5A5">
+            <path d="M9.73950954,16 L8.79128065,15.1400545 C5.42343324,12.0828338 3.2,10.0653951 3.2,7.59673025 C3.2,5.57929155 4.77929155,4 6.79673025,4 C7.9346049,4 9.026703,4.52970027 9.73950954,5.36348774 C10.4523161,4.52970027 11.5444142,4 12.6822888,4 C14.6997275,4 16.2790191,5.57929155 16.2790191,7.59673025 C16.2790191,10.0653951 14.0555858,12.0828338 10.6877384,15.1400545 L9.73950954,16 Z" id="Shape"></path>
+        </g>
+    </g>
+</svg>

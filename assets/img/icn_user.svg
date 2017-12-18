@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="13px" height="12px" viewBox="0 0 13 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43 (38999) - http://www.bohemiancoding.com/sketch -->
+    <title>icn_user</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="app-all_user_doct" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.5">
+        <g id="icn_user" transform="translate(-4.000000, -4.000000)" fill="#A5A5A5">
+            <g id="Group-2" transform="translate(4.000000, 4.000000)">
+                <path d="M6,6.35294118 C7.75058824,6.35294118 9.17647059,4.93411765 9.17647059,3.17647059 C9.17647059,1.42588235 7.75058824,0 6,0 C4.24941176,0 2.82352941,1.42588235 2.82352941,3.17647059 C2.82352941,4.93411765 4.24941176,6.35294118 6,6.35294118 Z" id="Path"></path>
+                <path d="M12.7058824,10.9411765 C12.7058824,8.82352941 8.47058824,7.76470588 6.35294118,7.76470588 C4.23529412,7.76470588 0,8.82352941 0,10.9411765 L0,12 L12.7058824,12 L12.7058824,10.9411765 Z" id="Path"></path>
+            </g>
+        </g>
+    </g>
+</svg>
