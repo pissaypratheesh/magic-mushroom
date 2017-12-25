@@ -23,6 +23,9 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.store = this.props.store.appState;
+    this.state = {
+      errorMsg:''
+    };
     this.handleChangeStates = this.handleChangeStates.bind(this);
     this.handleChangeLocalities = this.handleChangeLocalities.bind(this);
     this.handleChangeSuggestion = this.handleChangeSuggestion.bind(this);
@@ -113,7 +116,6 @@ class Home extends React.Component {
   }
 
   handleChangeStates = (selectedOption) => {
-    console.log("Selected:", selectedOption);
     let context = this;
     makeRequest({ urlList:[{url:'/apis/aasaudh/locality/cityid/?cityid='+selectedOption.cityId,method:'get'}],source:'client'},(err,resp)=>{
       if(_.at(resp,'0.data')){
@@ -131,14 +133,12 @@ class Home extends React.Component {
   }
 
   handleChangeLocalities = (options) => {
-    console.log(" in handleChangeLoc-->",options)
     this.store.updateData({
       selectedLocality:options
     })
   }
 
   handleChangeSuggestion = (options) => {
-    console.log(" in handleChangeSuggession-->",options)
     this.store.updateData({
       selectedSuggestion:options
     })
@@ -180,8 +180,11 @@ class Home extends React.Component {
                   options={toJS(categorySuggest || [])}/>
               </li>
               <li>
-                <Link to={`/state/${context.store.selectedState.name}/searchlist?cityid=${_.at(context,'store.selectedCity.cityId')}&localityid=${_.at(context,'store.selectedLocality.localityId')}&categoryid=${_.at(context,'store.selectedSuggestion.entitySubCategoryId')}`}
-                      className="btn col_blue FR">Search</Link>
+                <a onClick={(e) => {
+                      let url = `/state/${context.store.selectedState.name}/searchlist?cityid=${_.at(context,'store.selectedCity.cityId')}&localityid=${_.at(context,'store.selectedLocality.localityId')}&categoryid=${_.at(context,'store.selectedSuggestion.entitySubCategoryId')}`
+                      const {history} = context.props;
+                      history.push(url);}}
+                   className="btn col_blue FR">Search</a>
                 <a href="#" className="btn col_gry FR">Reset</a>
               </li>
             </ul>
