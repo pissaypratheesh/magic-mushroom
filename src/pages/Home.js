@@ -8,6 +8,7 @@ import { inject, observer } from "mobx-react";
 import { toJS } from "mobx"
 import personalization from '../lib/personalization';
 import {makeRequest} from "../lib/makeRequest";
+import {urlStrBuilder} from "../lib/randomUtil";
 var _ = require('underscore');
 _.mixin(require('../lib/mixins'));
 
@@ -193,8 +194,14 @@ class Home extends React.Component {
           <div className="navSlider">
             <ul>
               {scrollableCategories && _.map(scrollableCategories,(cats)=>{
+                let catName = _.at(cats, 'entityCategoryName') && urlStrBuilder(cats.entityCategoryName) ;
+                let catId = cats.entityCategoryId;
+                let state = _.at(context,'store.selectedState.name');
+                let catUrl = `/state/${state}/${catId}/${catName}`;
+
+                console.log('{{Cats}}',context,cats,catUrl,state);
                   return (<li>
-                    <a href="">
+                    <a href={catUrl}>
                       <picture>
                         <img src="assets/img/img_doctor.jpg" alt=""/>
                       </picture>

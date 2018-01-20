@@ -3,6 +3,7 @@ import { Route, Link, Redirect, Switch ,withRouter} from "react-router-dom";
 import { inject, observer } from "mobx-react";
 import Home from './Home'
 import List from './List'
+import CatList from './CatList'
 import NotFound from "./NotFound"
 var cookies = require('js-cookie');
 var _ = require('underscore');
@@ -61,6 +62,13 @@ class App extends Component {
             path="/state/:state"
             render={props => {
               return <Home {...props}/>}
+            }
+          />
+          <Route
+            exact
+            path="/state/:state/:catId/:catName"
+            render={props => {
+              return <CatList {...props}/>}
             }
           />
           <Route
