@@ -27,4 +27,10 @@ function imageFormatter(url, dimension){
       return {webp,jpg};
 }
 
-module.exports = imageFormatter;
+let randUtils = {
+  urlStrBuilder:function(str){
+    return str && str.trim().replace(/\s+/g, '-').toLocaleLowerCase();
+  }
+};
+
+module.exports = randUtils;
